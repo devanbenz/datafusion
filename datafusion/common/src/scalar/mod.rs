@@ -2825,6 +2825,7 @@ impl ScalarValue {
             safe: false,
             format_options: Default::default(),
         };
+        println!("CASTING TO {data_type}");
         let cast_arr = cast_with_options(&self.to_array()?, data_type, &cast_options)?;
         ScalarValue::try_from_array(&cast_arr, 0)
     }

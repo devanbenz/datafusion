@@ -79,6 +79,7 @@ impl<'a, S: ContextProvider> SqlToRel<'a, S> {
                             stack.push(StackEntry::SQLExpr(left));
                         }
                         _ => {
+                            println!("{sql_expr:?}");
                             let expr = self.sql_expr_to_logical_expr_internal(
                                 *sql_expr,
                                 schema,
@@ -324,7 +325,6 @@ impl<'a, S: ContextProvider> SqlToRel<'a, S> {
                 if let Some(format) = format {
                     return not_impl_err!("CAST with format is not supported: {format}");
                 }
-
                 let dt = self.convert_data_type(&data_type)?;
                 let expr =
                     self.sql_expr_to_logical_expr(*expr, schema, planner_context)?;
