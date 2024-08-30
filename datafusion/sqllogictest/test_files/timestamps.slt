@@ -1250,6 +1250,17 @@ second 2020-09-08T11:42:29
 second 2020-09-08T12:42:29
 second 2020-09-08T13:42:29
 
+# test timestamp cast and ensure that tz information is not stripped
+## see: https://github.com/apache/datafusion/issues/12218
+query T
+SELECT arrow_typeof((now() AT TIME ZONE 'America/Denver')::timestamp);
+----
+Timestamp(Nanosecond, Some("America/Denver"))
+
+query P
+SELECT ('2024-08-28 10:00:00' AT TIME ZONE 'America/Denver')::timestamp;
+----
+2024-08-28T16:00:00-06:00
 
 # test date trunc on different timestamp scalar types and ensure they are consistent
 query P rowsort
